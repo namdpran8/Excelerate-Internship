@@ -2,4 +2,5 @@
 library;
 
 export 'empty_state.dart';
-export 'wavy_progress_indicators.dart';
+export 'wavy_circular_progress.dart';
+export 'wavy_linear_progress.dart';

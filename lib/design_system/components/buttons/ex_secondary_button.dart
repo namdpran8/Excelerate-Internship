@@ -1,4 +1,7 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
+
+import '../../tokens/tokens.dart';
 
 /// A medium-emphasis outlined button for secondary actions.
 ///
@@ -6,18 +9,20 @@ import 'package:flutter/material.dart';
 /// across the app. Styling (shape, padding, colors) is inherited from
 /// [AppTheme]'s [OutlinedButtonThemeData].
 ///
+/// Handles async [onPressed] callbacks natively by showing a loading
+/// indicator and disabling duplicate taps.
+///
 /// ```dart
 /// ExSecondaryButton(
-///   onPressed: () => handleCancel(),
+///   onPressed: () async => await handleCancel(),
 ///   child: Text('Cancel'),
 /// )
 /// ```
-///
-/// See also:
-///   - [ExPrimaryButton] for high-emphasis actions.
-class ExSecondaryButton extends StatelessWidget {
+class ExSecondaryButton extends StatefulWidget {
   /// Callback invoked when the button is tapped. Pass `null` to disable.
-  final VoidCallback? onPressed;
+  /// If this returns a [Future], the button will show a loading state
+  /// and disable itself until the future completes.
+  final FutureOr<void> Function()? onPressed;
 
   /// The button's label — typically a [Text] widget.
   final Widget? child;
@@ -25,7 +30,7 @@ class ExSecondaryButton extends StatelessWidget {
   /// Optional icon to display alongside the label.
   final Widget? icon;
 
-  /// Controls the loading state. Displays a progress indicator if true.
+  /// Controls the loading state manually. Displays a progress indicator if true.
   final bool isLoading;
   
   /// Semantic label for accessibility.
@@ -60,30 +65,67 @@ class ExSecondaryButton extends StatelessWidget {
   }) : child = label;
 
   @override
+  State<ExSecondaryButton> createState() => _ExSecondaryButtonState();
+}
+
+class _ExSecondaryButtonState extends State<ExSecondaryButton> {
+  bool _isInternalLoading = false;
+
+  void _handlePress() async {
+    if (widget.onPressed == null || _isInternalLoading || widget.isLoading) return;
+    
+    final result = widget.onPressed!();
+    if (result is Future) {
+      setState(() => _isInternalLoading = true);
+      try {
+        await result;
+      } finally {
+        if (mounted) setState(() => _isInternalLoading = false);
+      }
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final Widget content = isLoading
+    final bool showLoading = widget.isLoading || _isInternalLoading;
+    final Widget content = showLoading
         ? const SizedBox(
-            width: 20,
-            height: 20,
+            width: ExSizes.iconSm,
+            height: ExSizes.iconSm,
             child: CircularProgressIndicator(strokeWidth: 2.0),
           )
-        : child ?? const SizedBox.shrink();
+        : widget.child ?? const SizedBox.shrink();
 
-    if (icon != null && !isLoading) {
-      return OutlinedButton.icon(
-        onPressed: isLoading ? null : onPressed,
-        icon: icon!,
+    final mergedStyle = (widget.style ?? const ButtonStyle()).copyWith(
+      minimumSize: const WidgetStatePropertyAll(Size.fromHeight(ExSizes.buttonHeight)),
+    );
+
+    Widget button;
+    if (widget.icon != null && !showLoading) {
+      button = OutlinedButton.icon(
+        onPressed: widget.onPressed == null ? null : _handlePress,
+        icon: widget.icon!,
         label: content,
-        focusNode: focusNode,
-        style: style,
+        focusNode: widget.focusNode,
+        style: mergedStyle,
+      );
+    } else {
+      button = OutlinedButton(
+        onPressed: widget.onPressed == null ? null : _handlePress,
+        focusNode: widget.focusNode,
+        style: mergedStyle,
+        child: content,
       );
     }
 
-    return OutlinedButton(
-      onPressed: isLoading ? null : onPressed,
-      focusNode: focusNode,
-      style: style,
-      child: content,
-    );
+    if (widget.semanticsLabel != null) {
+      return Semantics(
+        label: widget.semanticsLabel,
+        button: true,
+        child: ExcludeSemantics(child: button),
+      );
+    }
+
+    return button;
   }
 }

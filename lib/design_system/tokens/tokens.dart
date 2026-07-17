@@ -8,4 +8,6 @@ library;
 export 'durations.dart';
 export 'elevations.dart';
 export 'radii.dart';
+export 'sizes.dart';
 export 'spacing.dart';
+

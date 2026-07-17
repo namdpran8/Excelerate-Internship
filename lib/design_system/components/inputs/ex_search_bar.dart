@@ -1,8 +1,10 @@
+import 'package:flutter/material.dart';
+import '../../tokens/tokens.dart';
+
 /// A pill-shaped search input field.
 ///
 /// Provides a search-optimized text field with a leading search icon,
-/// fully rounded corners (stadium shape), and a filled background
-/// using [surfaceContainerHigh].
+/// fully rounded corners (stadium shape), and an M3 surface background.
 ///
 /// ```dart
 /// ExSearchBar(
@@ -10,7 +12,6 @@
 ///   onChanged: (query) => filterResults(query),
 /// )
 /// ```
-import 'package:flutter/material.dart';
 
 /// Excelerate-styled search input field.
 ///
@@ -31,19 +32,12 @@ class ExSearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return SearchBar(
+      hintText: hintText,
       onChanged: onChanged,
-      decoration: InputDecoration(
-        hintText: hintText,
-        prefixIcon: const Icon(Icons.search),
-        filled: true,
-        fillColor: Theme.of(context).colorScheme.surfaceContainerHigh,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(9999.0),
-          borderSide: BorderSide.none,
-        ),
-        contentPadding: const EdgeInsets.symmetric(vertical: 0),
-      ),
+      leading: const Icon(Icons.search),
+      elevation: const WidgetStatePropertyAll(0), // ExElevations.level0
+      padding: const WidgetStatePropertyAll(EdgeInsets.symmetric(horizontal: ExSpacing.md)),
     );
   }
 }

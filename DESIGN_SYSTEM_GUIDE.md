@@ -1,195 +1,57 @@
-# Excelerate Design
+# Excelerate Design System
 
-Welcome to the Excelerate Design! This document serves as a guide for all team members (especially for UI/UX integration and global theme wiring) to understand how to use the pre-built, reusable components to build screens rapidly and consistently.
+The Excelerate Design System provides a standardized, cohesive set of UI components and styling tokens built on top of Material 3. This guide serves as the definitive source of truth for using the design system.
 
-## Getting Started
+## Core Philosophy
 
-Instead of importing individual files for every widget, simply add this **single import** to the top of your Dart files:
+1. **Material 3 Foundation:** We build on top of Flutter's Material 3 implementation, utilizing `AppTheme` and `ColorScheme` extensively.
+2. **Tokens, not Constants:** Never hardcode colors, padding, radii, or typography in UI components. Always use the predefined tokens or theme extensions.
+3. **Responsive by Default:** Use layout primitives that naturally adapt to various screen sizes.
+4. **Single Source of Truth:** `lib/design_system/design_system.dart` is the only file you should import when accessing design system elements.
 
-```dart
-import 'package:excelerate_internship/design_system/design_system.dart';
-// Note: adjust the package name if your pubspec name differs, 
-// or use relative paths like import '../../design_system/design_system.dart';
-```
+## Token Architecture
 
----
+Our tokens abstract raw values into semantic meanings:
 
-## The Global Theme
+- **Colors (`ExColorScheme`, `SemanticColors`):** Provide the full 30-color M3 palette and custom semantic statuses (Success, Warning, Info, Destructive). Access via `Theme.of(context).colorScheme` and `Theme.of(context).extension<SemanticColors>()`.
+- **Typography (`ExTypography`):** Implements all 15 M3 text roles (Display, Headline, Title, Body, Label) with explicit letter spacing and line heights. Access via `Theme.of(context).textTheme`.
+- **Spacing (`ExSpacing`):** Base-4 and base-8 spacing values (xs: 4, sm: 8, md: 16, lg: 24, xl: 32, xxl: 48).
+- **Radii (`ExRadii`):** Standardized border radii (xs: 4, sm: 8, md: 12, lg: 16, xl: 28, full: 9999).
+- **Elevations (`ExElevations`):** 4 levels of surface elevation based on the M3 tonal system (0.0, 1.0, 3.0, 6.0).
+- **Sizes (`ExSizes`):** Standard sizes for icons, avatars, and buttons.
+- **Durations (`ExDurations`):** Consistent motion timings for animations.
 
-The design system handles Material 3 Expression and Motion automatically. The central theme configuration is located in `lib/design_system/theme/app_theme.dart`.
+## Components
 
-To ensure all components look correct, `app.dart` should wrap the app like this:
-```dart
-MaterialApp(
-  theme: AppTheme.lightTheme,
-  darkTheme: AppTheme.darkTheme,
-  themeMode: ThemeMode.system, 
-  scrollBehavior: const MaterialScrollBehavior(), // Ensures M3 physics
-  home: ...
-)
-```
+### Buttons
+- **`ExPrimaryButton`:** High-emphasis actions.
+- **`ExSecondaryButton`:** Medium-emphasis outlined actions.
+- Both natively handle `Future`-returning `onPressed` callbacks by automatically showing a loading state and preventing duplicate taps.
 
-**Typography:** You do not need to manually style fonts. Use the standard text styles:
-```dart
-Text('My Title', style: Theme.of(context).textTheme.titleLarge);
-Text('My Body text', style: Theme.of(context).textTheme.bodyMedium);
-```
+### Inputs
+- **`ExTextField`:** Form-capable styled input field. Inherits heavily from the standard `InputDecorationTheme`. (Wraps `TextFormField`).
+- **`ExSearchBar`:** Wraps the M3 `SearchBar` for a stadium-shaped, search-optimized input.
 
----
+### Layout & Containers
+- **`ExScaffold`:** A responsive scaffold that automatically restricts content width on large screens to prevent stretching.
+- **`ExSectionHeader`:** Introduces content sections with an optional trailing action (e.g., "See All").
+- **`ExCard`:** A purely visual generic surface container with default margin, padding, elevation, and shape.
+- **`ExAvatar`:** User profile representations.
+- **`ExFilterChip`:** Selectable category filters.
 
-## Component Library
-
-### 1. Buttons
-
-The buttons already implement `FilledButton` and `OutlinedButton` under the hood with proper M3 shapes (8px radius) and paddings.
-
-**Primary Button** (Filled, high emphasis)
-```dart
-PrimaryButton(
-  text: 'Get Started',
-  onPressed: () {
-    // action
-  },
-)
-```
-
-**Secondary Button** (Outlined, medium emphasis)
-```dart
-SecondaryButton(
-  text: 'Cancel',
-  onPressed: () {
-    // action
-  },
-)
-```
-
----
-
-### 2. Cards & Containers
-
-**Expressive Card**
-A base card that provides the default surface colors and an implicit `InkWell` for native M3 ripple effects when tapped.
-```dart
-ExpressiveCard(
-  onTap: () {
-    print('Card Tapped!'); // Triggers a ripple
-  },
-  padding: const EdgeInsets.all(16.0),
-  child: Text('Card Content'),
-)
-```
-
-**Program Card**
-A specialized composite card built on top of `ExpressiveCard`. Used to display courses, internships, or programs. Note: this has been moved out of the generic design system into `features/programs/widgets/`.
-```dart
-ProgramCard(
-  title: 'Flutter Internship',
-  description: 'Learn Flutter by building real world apps.',
-  imageUrl: 'path/to/image.png',
-  onTap: () => print('Open Program'),
-)
-```
-
----
-
-### 3. Inputs & Forms
-
-**Ex Text Field**
-A styled `TextFormField` with smooth borders and filled backgrounds.
-```dart
-ExTextField(
-  hintText: 'Enter your email',
-  prefixIcon: Icons.email,
-  obscureText: false,
-)
-```
-
-**Ex Search Bar**
-A specialized input specifically optimized for searching lists/content.
-```dart
-ExSearchBar(
-  hintText: 'Search programs...',
-  onChanged: (value) {
-    // filter logic
-  },
-)
-```
-
----
-
-### 4. Progress & Feedback (Wavy Indicators)
-
-We feature stunning, organic "wavy" progress indicators heavily inspired by Material 3 Expressive guidelines.
-
-**Wavy Circular Progress Indicator**
-```dart
-// Indeterminate (spinning continuously)
-WavyCircularProgressIndicator(value: null)
-
-// Determinate (fixed at 65%)
-WavyCircularProgressIndicator(value: 0.65)
-```
-
-**Wavy Linear Progress Indicator**
-```dart
-// Indeterminate (wave travels across the line)
-WavyLinearProgressIndicator(value: null)
-
-// Determinate (fills up to 35%, stops with a dot)
-WavyLinearProgressIndicator(value: 0.35)
-```
-
-*Note: The original package versions (`ExpressiveLoadingIndicator` and `ExpressiveLinearProgressIndicator`) are also available if you prefer the morphing shape styles.*
-
----
-
-### 5. Layout & Misc
-
-**Section Header**
-A clean row with a Title on the left and a "See All" button on the right.
-```dart
-SectionHeader(
-  title: 'Recommended Programs',
-  onSeeAll: () {
-    // navigate to list
-  },
-)
-```
-
-**Ex Chip**
-A styled `FilterChip` for tags, categories, or filters. Includes implicit animations.
-```dart
-ExChip(
-  label: 'Design',
-  isSelected: true,
-  onSelected: (selected) {
-    // toggle state
-  },
-)
-```
-
-**Ex Avatar**
-A unified profile picture widget that handles fallbacks gracefully.
-```dart
-ExAvatar(
-  imageUrl: 'https://...', // optional
-  radius: 24,
-)
-```
-
-**Empty State**
-Use this when a list is empty or a search returns no results.
-```dart
-EmptyState(
-  icon: Icons.search_off,
-  title: 'No results found',
-  message: 'Try adjusting your filters.',
-)
-```
-
----
+### Feedback
+- **`EmptyState`:** A full-screen placeholder when content is unavailable.
+- **`WavyCircularProgressIndicator` & `WavyLinearProgressIndicator`:** Expressive loading indicators supporting both determinate and indeterminate modes. They automatically pause when animations are disabled by the OS.
 
 ## Best Practices
-- **Do not hardcode colors**. Always rely on `Theme.of(context).colorScheme...` if you need a specific color. Our `AppTheme` handles the dark/light mode mapping for you.
-- **Do not hardcode font families**. Use `Theme.of(context).textTheme`.
-- **Use the Barrel File**. Always import `design_system.dart` rather than pathing to individual files in `lib/design_system/components/...`. It keeps imports clean and avoids cyclic dependencies.
+
+- **Avoid Wrappers:** Do not create wrappers for simple widgets like `Divider`, `Dialog`, or `Snackbar`. Theme them globally in `AppTheme`.
+- **Feature Specificity:** Components like `ProgramCard` belong in their respective feature folders (`lib/features/programs/widgets/`), not the core design system.
+- **Accessibility:** All custom components must support `Semantics` and respect `MediaQuery.disableAnimations`.
+
+## Demo & Showcase
+
+Run the isolated design system gallery to test components without running the full app:
+```bash
+flutter run -t lib/main_design_system.dart
+```

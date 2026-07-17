@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 /// Border radius constants for the Excelerate design system.
 ///
 /// Use these values for all [BorderRadius] definitions to ensure consistent
@@ -7,7 +9,6 @@
 /// ```dart
 /// BorderRadius.circular(ExRadii.md)
 /// ```
-import 'package:flutter/material.dart';
 
 class ExRadii {
   const ExRadii._();
@@ -39,6 +40,9 @@ class ExRadii {
 
   /// [BorderRadius] with [lg] rounding on all corners.
   static final BorderRadius borderRadiusLg = BorderRadius.circular(lg);
+
+  /// [BorderRadius] with [xl] rounding on all corners.
+  static final BorderRadius borderRadiusXl = BorderRadius.circular(xl);
 
   /// [BorderRadius] with [full] rounding (stadium shape).
   static final BorderRadius borderRadiusFull = BorderRadius.circular(full);

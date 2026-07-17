@@ -30,8 +30,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_spinkit: ^5.2.2
-  material3_expressive_loading_indicator: ^0.1.1
   google_fonts: ^6.2.1
 
   # The following adds the Cupertino Icons font to your application.

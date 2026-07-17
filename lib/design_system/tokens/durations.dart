@@ -1,3 +1,5 @@
+import 'package:flutter/animation.dart';
+
 /// Animation duration constants for the Excelerate design system.
 ///
 /// Use these values for all [AnimationController] durations and
@@ -22,4 +24,27 @@ class ExDurations {
 
   /// 2000ms — Slow continuous animations (circular loaders).
   static const Duration extraLong = Duration(seconds: 2);
+}
+
+/// Motion curves for the Excelerate design system.
+///
+/// Usage:
+/// ```dart
+/// AnimatedContainer(
+///   duration: ExDurations.medium,
+///   curve: ExCurves.standard,
+/// )
+/// ```
+
+class ExCurves {
+  const ExCurves._();
+
+  /// Used for elements moving within the screen.
+  static const Curve standard = Curves.easeInOutCubic;
+
+  /// Used for elements entering the screen.
+  static const Curve decelerate = Curves.easeOutCubic;
+
+  /// Used for elements exiting the screen.
+  static const Curve accelerate = Curves.easeInCubic;
 }

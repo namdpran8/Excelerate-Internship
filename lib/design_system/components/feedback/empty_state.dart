@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import '../../tokens/tokens.dart';
+
 /// A full-screen empty state placeholder.
 ///
 /// Displays a centered icon and message when content is unavailable,
@@ -9,7 +12,6 @@
 ///   message: 'No results found. Try adjusting your filters.',
 /// )
 /// ```
-import 'package:flutter/material.dart';
 
 class EmptyState extends StatelessWidget {
   /// Descriptive text explaining why no content is shown.
@@ -28,16 +30,16 @@ class EmptyState extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(32.0),
+        padding: const EdgeInsets.all(ExSpacing.xl),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(
               icon,
-              size: 64,
-              color: Theme.of(context).colorScheme.surfaceContainerHighest,
+              size: ExSizes.avatarLg,
+              color: Theme.of(context).colorScheme.outline,
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: ExSpacing.md),
             Text(
               message,
               textAlign: TextAlign.center,

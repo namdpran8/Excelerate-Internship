@@ -5,7 +5,7 @@
 /// - **Cards**: [ExCard], [ProgramCard]
 /// - **Inputs**: [ExTextField], [ExSearchBar]
 /// - **Feedback**: [EmptyState], [WavyLinearProgressIndicator], [WavyCircularProgressIndicator]
-/// - **Layout**: [ExSectionHeader], [ExChip], [ExAvatar]
+/// - **Layout**: [ExSectionHeader], [ExFilterChip], [ExAvatar]
 library;
 
 export 'buttons/buttons.dart';

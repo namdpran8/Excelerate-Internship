@@ -7,3 +7,4 @@ library;
 export 'app_theme.dart';
 export 'ex_color_scheme.dart';
 export 'ex_typography.dart';
+export 'semantic_colors.dart';

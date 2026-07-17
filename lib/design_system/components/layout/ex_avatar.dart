@@ -1,17 +1,19 @@
-/// A circular avatar displaying user initials.
+import 'package:flutter/material.dart';
+
+import '../../tokens/sizes.dart';
+
+/// A circular avatar for displaying user profiles or initials.
 ///
-/// Shows a [CircleAvatar] with bold initials on a tonal primary background.
-/// Scales font size proportionally to [radius].
+/// Uses standard design system sizes. If an [imageUrl] is provided, it
+/// displays the image; otherwise, it falls back to displaying [initials]
+/// with a primary-tinted background.
 ///
 /// ```dart
 /// ExAvatar(
-///   initials: 'PK',
-///   radius: 24,
+///   initials: 'JD',
+///   size: ExSizes.avatarLg,
 /// )
 /// ```
-import 'package:flutter/material.dart';
-
-/// Excelerate-styled circular avatar.
 class ExAvatar extends StatelessWidget {
   /// One or two characters to display (e.g., first + last initial).
   final String initials;
@@ -19,22 +21,46 @@ class ExAvatar extends StatelessWidget {
   /// The avatar's radius in logical pixels. Defaults to 20.
   final double radius;
 
+  /// Optional URL for the user's profile image. If null, displays [initials].
+  final String? imageUrl;
+
+  /// Semantic description announced by screen readers.
+  final String? semanticsLabel;
+
   const ExAvatar({
     super.key,
     required this.initials,
-    this.radius = 20.0,
+    this.radius = ExSizes.avatarMd / 2,
+    this.imageUrl,
+    this.semanticsLabel,
   });
 
   @override
   Widget build(BuildContext context) {
-    return CircleAvatar(
+    final String? trimmedImageUrl = imageUrl?.trim();
+    final ImageProvider<Object>? foregroundImage =
+        trimmedImageUrl == null || trimmedImageUrl.isEmpty
+        ? null
+        : NetworkImage(trimmedImageUrl);
+
+    final avatar = CircleAvatar(
       radius: radius,
       backgroundColor: Theme.of(context).colorScheme.primaryContainer,
       foregroundColor: Theme.of(context).colorScheme.onPrimaryContainer,
+      foregroundImage: foregroundImage,
+      onForegroundImageError: foregroundImage == null ? null : (_, __) {},
       child: Text(
         initials,
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: radius * 0.8),
+        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+          color: Theme.of(context).colorScheme.onPrimaryContainer,
+        ),
       ),
+    );
+
+    return Semantics(
+      image: foregroundImage != null,
+      label: semanticsLabel ?? initials,
+      child: ExcludeSemantics(child: avatar),
     );
   }
 }

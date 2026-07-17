@@ -1,3 +1,7 @@
+import 'dart:math' as math;
+import 'package:flutter/material.dart';
+import '../../tokens/tokens.dart';
+
 /// A circular progress indicator with a wavy/squiggly stroke,
 /// inspired by the Material 3 Expressive circular loader style.
 ///
@@ -12,8 +16,6 @@
 ///
 /// See also:
 ///   - [WavyLinearProgressIndicator] for linear variant.
-import 'dart:math' as math;
-import 'package:flutter/material.dart';
 
 class WavyCircularProgressIndicator extends StatefulWidget {
   /// Progress value between 0.0 and 1.0. Pass `null` for indeterminate mode.
@@ -31,22 +33,31 @@ class WavyCircularProgressIndicator extends StatefulWidget {
   /// Thickness of the drawn wave and track arcs.
   final double strokeWidth;
 
-  /// Color of the active (filled) wave arc.
-  final Color activeColor;
+  /// Color of the active (filled) wave arc. Defaults to theme primary.
+  final Color? activeColor;
 
-  /// Color of the inactive (remaining) track arc.
-  final Color inactiveColor;
+  /// Color of the inactive (remaining) track arc. Defaults to theme surface container highest.
+  final Color? inactiveColor;
+
+  /// Accessible description announced by screen readers.
+  final String? semanticsLabel;
 
   const WavyCircularProgressIndicator({
     super.key,
     this.value,
-    this.size = 48,
+    this.size = ExSizes.circularProgressSize,
     this.waveAmplitude = 3,
     this.waveCount = 10,
-    this.strokeWidth = 4,
-    this.activeColor = Colors.deepPurple,
-    this.inactiveColor = const Color(0xFFE3DEF7),
-  });
+    this.strokeWidth = ExSizes.progressStrokeWidth,
+    this.activeColor,
+    this.inactiveColor,
+    this.semanticsLabel,
+  }) : assert(value == null || (value >= 0 && value <= 1)),
+       assert(size > 0),
+       assert(waveAmplitude >= 0),
+       assert(waveCount > 0),
+       assert(strokeWidth > 0),
+       assert(size > (strokeWidth * 4) + (waveAmplitude * 2));
 
   @override
   State<WavyCircularProgressIndicator> createState() =>
@@ -63,8 +74,38 @@ class _WavyCircularProgressIndicatorState
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 2),
-    )..repeat();
+      duration: ExDurations.extraLong,
+    );
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _updateAnimation();
+  }
+
+  @override
+  void didUpdateWidget(covariant WavyCircularProgressIndicator oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.value != widget.value) {
+      _updateAnimation();
+    }
+  }
+
+  void _updateAnimation() {
+    final disableAnimations = MediaQuery.disableAnimationsOf(context);
+    final isDeterminate = widget.value != null;
+    if (disableAnimations || isDeterminate) {
+      _controller.stop();
+      if (isDeterminate) {
+        _controller.value =
+            0; // Reset phase for consistent determinate rendering
+      }
+    } else {
+      if (!_controller.isAnimating) {
+        _controller.repeat();
+      }
+    }
   }
 
   @override
@@ -75,22 +116,33 @@ class _WavyCircularProgressIndicatorState
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _controller,
-      builder: (context, _) {
-        return CustomPaint(
-          size: Size(widget.size, widget.size),
-          painter: _WavyCircularPainter(
-            progress: widget.value,
-            rotation: _controller.value * 2 * math.pi,
-            amplitude: widget.waveAmplitude,
-            waveCount: widget.waveCount,
-            strokeWidth: widget.strokeWidth,
-            activeColor: widget.activeColor,
-            inactiveColor: widget.inactiveColor,
-          ),
-        );
-      },
+    final value = widget.value;
+    return Semantics(
+      label: widget.semanticsLabel ?? 'Progress indicator',
+      value: value == null ? null : '${(value * 100).round()}%',
+      liveRegion: value == null,
+      child: ExcludeSemantics(
+        child: AnimatedBuilder(
+          animation: _controller,
+          builder: (context, _) {
+            return CustomPaint(
+              size: Size(widget.size, widget.size),
+              painter: _WavyCircularPainter(
+                progress: value,
+                rotation: _controller.value * 2 * math.pi,
+                amplitude: widget.waveAmplitude,
+                waveCount: widget.waveCount,
+                strokeWidth: widget.strokeWidth,
+                activeColor:
+                    widget.activeColor ?? Theme.of(context).colorScheme.primary,
+                inactiveColor:
+                    widget.inactiveColor ??
+                    Theme.of(context).colorScheme.surfaceContainerHighest,
+              ),
+            );
+          },
+        ),
+      ),
     );
   }
 }
@@ -131,7 +183,9 @@ class _WavyCircularPainter extends CustomPainter {
       ..strokeCap = StrokeCap.round;
 
     // sweep: how much of the circle is "active" (wavy)
-    final sweep = progress != null ? 2 * math.pi * progress! : 2 * math.pi * 0.75;
+    final sweep = progress != null
+        ? 2 * math.pi * progress!
+        : 2 * math.pi * 0.75;
     final startAngle = -math.pi / 2 + rotation;
 
     // --- Inactive track (only for determinate mode) ---
@@ -169,5 +223,13 @@ class _WavyCircularPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant _WavyCircularPainter oldDelegate) => true;
+  bool shouldRepaint(covariant _WavyCircularPainter oldDelegate) {
+    return progress != oldDelegate.progress ||
+        rotation != oldDelegate.rotation ||
+        amplitude != oldDelegate.amplitude ||
+        waveCount != oldDelegate.waveCount ||
+        strokeWidth != oldDelegate.strokeWidth ||
+        activeColor != oldDelegate.activeColor ||
+        inactiveColor != oldDelegate.inactiveColor;
+  }
 }

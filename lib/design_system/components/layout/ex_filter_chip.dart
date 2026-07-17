@@ -1,19 +1,19 @@
-/// A filter chip with animated selection state.
+import 'package:flutter/material.dart';
+import '../../tokens/tokens.dart';
+
+/// Excelerate-styled filter chip for tags, categories, or filters.
 ///
-/// Wraps [FilterChip] with Excelerate styling: pill shape, tonal surface
+/// Provides a stadium-shaped chip with a checkmark when selected, custom
 /// tint, and bold text on selection.
 ///
 /// ```dart
-/// ExChip(
+/// ExFilterChip(
 ///   label: 'Design',
 ///   isSelected: true,
 ///   onSelected: (selected) => toggleFilter(selected),
 /// )
 /// ```
-import 'package:flutter/material.dart';
-
-/// Excelerate-styled filter chip for tags, categories, or filters.
-class ExChip extends StatelessWidget {
+class ExFilterChip extends StatelessWidget {
   /// The text label displayed inside the chip.
   final String label;
 
@@ -26,7 +26,7 @@ class ExChip extends StatelessWidget {
   /// Called when the chip's delete icon is tapped (if shown).
   final VoidCallback? onDeleted;
 
-  const ExChip({
+  const ExFilterChip({
     super.key,
     required this.label,
     this.isSelected = false,
@@ -45,15 +45,15 @@ class ExChip extends StatelessWidget {
       onDeleted: onDeleted,
       backgroundColor: ElevationOverlay.applySurfaceTint(colorScheme.surface, colorScheme.primary, 0.5), // subtle tint
       selectedColor: colorScheme.primaryContainer,
-      labelStyle: TextStyle(
+      labelStyle: Theme.of(context).textTheme.labelLarge?.copyWith(
         color: isSelected ? colorScheme.onPrimaryContainer : colorScheme.onSurfaceVariant,
-        fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+        fontWeight: isSelected ? FontWeight.bold : null,
       ),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(9999.0),
+        borderRadius: ExRadii.borderRadiusFull,
         side: const BorderSide(color: Colors.transparent),
       ),
-      padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+      padding: const EdgeInsets.symmetric(horizontal: ExSpacing.md, vertical: ExSpacing.sm),
     );
   }
 }

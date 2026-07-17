@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 /// Excelerate color scheme definitions for light and dark modes.
 ///
 /// These [ColorScheme] objects define the full tonal palette for the app.
@@ -9,7 +11,6 @@
 ///
 /// See also:
 ///   - [Material 3 Color System](https://m3.material.io/styles/color/system)
-import 'package:flutter/material.dart';
 
 /// All color definitions for the Excelerate design system.
 ///
@@ -36,7 +37,19 @@ class ExColorScheme {
     onPrimaryContainer: Color(0xFF3A0905),
     secondary: Color(0xFF3D6835),
     onSecondary: Color(0xFFFFFFFF),
-    surfaceVariant: Color(0xFFF5E0DD),
+    error: Color(0xFFBA1A1A),
+    onError: Color(0xFFFFFFFF),
+    errorContainer: Color(0xFFFFDAD6),
+    onErrorContainer: Color(0xFF410002),
+    tertiary: Color(0xFF705C2E),
+    onTertiary: Color(0xFFFFFFFF),
+    tertiaryContainer: Color(0xFFFBDFA6),
+    onTertiaryContainer: Color(0xFF251A00),
+    inverseSurface: Color(0xFF362F2E),
+    inversePrimary: Color(0xFFFFB4A9),
+    onInverseSurface: Color(0xFFFBEEEC),
+    scrim: Color(0xFF000000),
+    shadow: Color(0xFF000000),
   );
 
   /// Dark mode color scheme — inverted warm coral tones.
@@ -57,6 +70,18 @@ class ExColorScheme {
     onPrimaryContainer: Color(0xFF7A433B),
     secondary: Color(0xFFA5D299),
     onSecondary: Color(0xFF11380F),
-    surfaceVariant: Color(0xFF363530),
+    error: Color(0xFFFFB4AB),
+    onError: Color(0xFF690005),
+    errorContainer: Color(0xFF93000A),
+    onErrorContainer: Color(0xFFFFDAD6),
+    tertiary: Color(0xFFDEC38C),
+    onTertiary: Color(0xFF3E2E04),
+    tertiaryContainer: Color(0xFF564419),
+    onTertiaryContainer: Color(0xFFFBDFA6),
+    inverseSurface: Color(0xFFEEDFDD),
+    inversePrimary: Color(0xFF8F4C43),
+    onInverseSurface: Color(0xFF362F2E),
+    scrim: Color(0xFF000000),
+    shadow: Color(0xFF000000),
   );
 }

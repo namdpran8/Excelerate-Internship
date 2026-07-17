@@ -7,6 +7,7 @@
 /// See also:
 ///   - [AppTheme] for theme configuration.
 ///   - [AppRoutes] for route constants.
+library;
 import 'package:flutter/material.dart';
 
 import 'design_system/design_system.dart';
@@ -15,8 +16,6 @@ import 'screens/home_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/program_details_screen.dart';
 import 'screens/program_listing_screen.dart';
-import 'package:flutter/foundation.dart';
-import 'debug/design_system_demo.dart';
 
 /// Root widget that configures [MaterialApp] with the Excelerate theme,
 /// routes, and behavior.
@@ -42,7 +41,6 @@ class ExcelerateLearningApp extends StatelessWidget {
         AppRoutes.home: (context) => const HomeScreen(),
         AppRoutes.programs: (context) => const ProgramListingScreen(),
         AppRoutes.details: (context) => const ProgramDetailsScreen(),
-        if (kDebugMode) AppRoutes.designSystem: (context) => const LivingDesignSystemPage(),
       },
     );
   }

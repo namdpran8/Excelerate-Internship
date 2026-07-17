@@ -1,30 +1,23 @@
+library;
+
 /// Living design system showcase — **debug only**.
 ///
 /// This screen renders every component from the Excelerate design system
-/// in a scrollable gallery. It is only accessible in debug builds via the
-/// `kDebugMode` guard.
-///
-/// To preview:
-/// 1. Run the app in debug mode
-/// 2. Navigate to the '/design-system' route (or tap the debug FAB)
+/// in a scrollable list. It acts as a catalog to verify visual changes
+/// without needing to navigate the actual app.
 ///
 /// This file should NOT be imported by production feature screens.
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:material3_expressive_loading_indicator/material3_expressive_loading_indicator.dart';
+
+import '../features/programs/widgets/program_card.dart';
 import '../design_system/design_system.dart';
 
-/// Entry point for the design system demo.
-///
-/// Returns [SizedBox.shrink] in release builds to ensure zero
-/// accidental exposure.
+/// Debug-only design system showcase, launched by `main_design_system.dart`.
 class LivingDesignSystemPage extends StatelessWidget {
   const LivingDesignSystemPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Removed in-build debug guard, handled in router registration now.
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Excelerate Demo'),
@@ -33,13 +26,19 @@ class LivingDesignSystemPage extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(24.0),
         children: [
-          Text('Welcome', style: Theme.of(context).textTheme.displayLarge?.copyWith(
-            color: Theme.of(context).colorScheme.primary,
-          )),
+          Text(
+            'Welcome',
+            style: Theme.of(context).textTheme.displayLarge?.copyWith(
+              color: Theme.of(context).colorScheme.primary,
+            ),
+          ),
           const SizedBox(height: 8),
-          Text('To the Excelerate Design', style: Theme.of(context).textTheme.titleMedium?.copyWith(
-            color: Theme.of(context).colorScheme.onSurfaceVariant,
-          )),
+          Text(
+            'To the Excelerate Design',
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+            ),
+          ),
           const SizedBox(height: 32),
           _buildTokensSection(context),
           const SizedBox(height: 32),
@@ -63,7 +62,12 @@ class LivingDesignSystemPage extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(title, style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold)),
+        Text(
+          title,
+          style: Theme.of(
+            context,
+          ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
+        ),
         const Divider(height: 32),
       ],
     );
@@ -72,7 +76,14 @@ class LivingDesignSystemPage extends StatelessWidget {
   Widget _buildDocNote(String text, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 8.0, bottom: 24.0),
-      child: Text(text, style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant, fontSize: 12, fontFamily: 'monospace')),
+      child: Text(
+        text,
+        style: TextStyle(
+          color: Theme.of(context).colorScheme.onSurfaceVariant,
+          fontSize: 12,
+          fontFamily: 'monospace',
+        ),
+      ),
     );
   }
 
@@ -86,12 +97,32 @@ class LivingDesignSystemPage extends StatelessWidget {
           spacing: 16,
           runSpacing: 16,
           children: [
-            _ColorSwatch(name: 'Primary', color: colors.primary, hex: '#FFDAD5'),
-            _ColorSwatch(name: 'Primary Container', color: colors.primaryContainer, hex: '#FFB4A9'),
-            _ColorSwatch(name: 'Secondary', color: colors.secondary, hex: '#A5D299'),
-            _ColorSwatch(name: 'Surface', color: colors.surface, hex: '#141310'),
-            _ColorSwatch(name: 'Surface Variant', color: colors.surfaceVariant, hex: '#363530'),
-            _ColorSwatch(name: 'Error', color: colors.error, hex: '#FFB4AB'),
+            _ColorSwatch(
+              name: 'Primary',
+              color: colors.primary,
+              hex: '#8F4C43',
+            ),
+            _ColorSwatch(
+              name: 'Primary Container',
+              color: colors.primaryContainer,
+              hex: '#FFDAD5',
+            ),
+            _ColorSwatch(
+              name: 'Secondary',
+              color: colors.secondary,
+              hex: '#3D6835',
+            ),
+            _ColorSwatch(
+              name: 'Surface',
+              color: colors.surface,
+              hex: '#FFF8F6',
+            ),
+            _ColorSwatch(
+              name: 'Surface Container Highest',
+              color: colors.surfaceContainerHighest,
+              hex: '#EEDFDD',
+            ),
+            _ColorSwatch(name: 'Error', color: colors.error, hex: '#BA1A1A'),
           ],
         ),
       ],
@@ -104,8 +135,11 @@ class LivingDesignSystemPage extends StatelessWidget {
       children: [
         _buildSectionTitle('Typography', context),
         Text('Display Large', style: Theme.of(context).textTheme.displayLarge),
-        _buildDocNote('Be Vietnam Pro, 57px, w700', context),
-        Text('Headline Large', style: Theme.of(context).textTheme.headlineLarge),
+        _buildDocNote('Dancing Script, 57px, w700', context),
+        Text(
+          'Headline Large',
+          style: Theme.of(context).textTheme.headlineLarge,
+        ),
         _buildDocNote('Be Vietnam Pro, 32px, w600', context),
         Text('Body Large', style: Theme.of(context).textTheme.bodyLarge),
         _buildDocNote('Inter, 16px, w400', context),
@@ -119,11 +153,14 @@ class LivingDesignSystemPage extends StatelessWidget {
       children: [
         _buildSectionTitle('Buttons', context),
         ExPrimaryButton(onPressed: () {}, child: const Text('Primary Default')),
-        _buildDocNote('ExPrimaryButton\nHeight: 52\nRadius: Stadium', context),
+        _buildDocNote('ExPrimaryButton', context),
         ExPrimaryButton(onPressed: null, child: const Text('Primary Disabled')),
         _buildDocNote('ExPrimaryButton (onPressed: null)', context),
-        ExSecondaryButton(onPressed: () {}, child: const Text('Secondary Default')),
-        _buildDocNote('ExSecondaryButton\nHeight: 52\nRadius: Stadium', context),
+        ExSecondaryButton(
+          onPressed: () {},
+          child: const Text('Secondary Default'),
+        ),
+        _buildDocNote('ExSecondaryButton', context),
       ],
     );
   }
@@ -154,20 +191,25 @@ class LivingDesignSystemPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('Expressive Card', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              Text('ExCard', style: Theme.of(context).textTheme.titleLarge),
               const SizedBox(height: 8),
-              Text('Base card container with 16px radius.', style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant)),
+              Text(
+                'Generic card surface styled by CardTheme.',
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
+              ),
             ],
           ),
         ),
-        _buildDocNote('ExCard\nPadding: 24\nRadius: 16', context),
+        _buildDocNote('ExCard', context),
         ProgramCard(
           title: 'Advanced UI/UX',
           description: 'Master Figma and design systems.',
           imageUrl: '',
           onTap: () {},
         ),
-        _buildDocNote('ProgramCard\nUses ExpressiveCard base', context),
+        _buildDocNote('ProgramCard\nUses ExCard base', context),
       ],
     );
   }
@@ -182,7 +224,9 @@ class LivingDesignSystemPage extends StatelessWidget {
           children: [
             ExPrimaryButton(
               onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('This is a Snackbar!')));
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('This is a Snackbar!')),
+                );
               },
               child: const Text('Show Snackbar'),
             ),
@@ -194,7 +238,10 @@ class LivingDesignSystemPage extends StatelessWidget {
                     title: const Text('Dialog Title'),
                     content: const Text('This is the content of the dialog.'),
                     actions: [
-                      TextButton(onPressed: () => Navigator.pop(context), child: const Text('Close')),
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: const Text('Close'),
+                      ),
                     ],
                   ),
                 );
@@ -203,45 +250,51 @@ class LivingDesignSystemPage extends StatelessWidget {
             ),
           ],
         ),
-        _buildDocNote('Standard Material Feedback components using the Theme', context),
-        const ExpressiveLoadingIndicator(),
-        _buildDocNote('ExpressiveLoadingIndicator (Material 3 Morphing Circular)', context),
-        const SizedBox(height: 32),
-        ExpressiveLinearProgressIndicator(
-          value: 0.5,
-          minHeight: 32.0, 
+        _buildDocNote(
+          'Standard Material Feedback components using the Theme',
+          context,
         ),
-        _buildDocNote('ExpressiveLinearProgressIndicator (Material 3 Wavy)', context),
-        const SizedBox(height: 32),
         WavyCircularProgressIndicator(
-          value: null, 
+          value: null,
           size: 56,
           activeColor: Theme.of(context).colorScheme.primary,
           inactiveColor: Theme.of(context).colorScheme.surfaceContainerHighest,
         ),
-        _buildDocNote('WavyCircularProgressIndicator (Custom Indeterminate)', context),
+        _buildDocNote(
+          'WavyCircularProgressIndicator (Custom Indeterminate)',
+          context,
+        ),
         const SizedBox(height: 32),
         WavyCircularProgressIndicator(
-          value: 0.65, 
+          value: 0.65,
           size: 56,
           activeColor: Theme.of(context).colorScheme.primary,
           inactiveColor: Theme.of(context).colorScheme.surfaceContainerHighest,
         ),
-        _buildDocNote('WavyCircularProgressIndicator (Custom Determinate)', context),
+        _buildDocNote(
+          'WavyCircularProgressIndicator (Custom Determinate)',
+          context,
+        ),
         const SizedBox(height: 32),
         WavyLinearProgressIndicator(
           value: null,
           activeColor: Theme.of(context).colorScheme.primary,
           inactiveColor: Theme.of(context).colorScheme.surfaceContainerHighest,
         ),
-        _buildDocNote('WavyLinearProgressIndicator (Custom Indeterminate)', context),
+        _buildDocNote(
+          'WavyLinearProgressIndicator (Custom Indeterminate)',
+          context,
+        ),
         const SizedBox(height: 32),
         WavyLinearProgressIndicator(
           value: 0.35,
           activeColor: Theme.of(context).colorScheme.primary,
           inactiveColor: Theme.of(context).colorScheme.surfaceContainerHighest,
         ),
-        _buildDocNote('WavyLinearProgressIndicator (Custom Determinate)', context),
+        _buildDocNote(
+          'WavyLinearProgressIndicator (Custom Determinate)',
+          context,
+        ),
       ],
     );
   }
@@ -258,11 +311,19 @@ class LivingDesignSystemPage extends StatelessWidget {
         Wrap(
           spacing: 8,
           children: [
-            ExChip(label: 'Selected', isSelected: true, onSelected: (v) {}),
-            ExChip(label: 'Unselected', isSelected: false, onSelected: (v) {}),
+            ExFilterChip(
+              label: 'Selected',
+              isSelected: true,
+              onSelected: (v) {},
+            ),
+            ExFilterChip(
+              label: 'Unselected',
+              isSelected: false,
+              onSelected: (v) {},
+            ),
           ],
         ),
-        _buildDocNote('ExChip\nPadding: 12x8', context),
+        _buildDocNote('ExFilterChip', context),
         const EmptyState(message: 'No programs found.', icon: Icons.school),
         _buildDocNote('EmptyState', context),
       ],
@@ -275,7 +336,11 @@ class _ColorSwatch extends StatelessWidget {
   final Color color;
   final String hex;
 
-  const _ColorSwatch({required this.name, required this.color, required this.hex});
+  const _ColorSwatch({
+    required this.name,
+    required this.color,
+    required this.hex,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -287,12 +352,23 @@ class _ColorSwatch extends StatelessWidget {
           decoration: BoxDecoration(
             color: color,
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: Theme.of(context).colorScheme.outlineVariant),
+            border: Border.all(
+              color: Theme.of(context).colorScheme.outlineVariant,
+            ),
           ),
         ),
         const SizedBox(height: 8),
-        Text(name, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
-        Text(hex, style: TextStyle(fontSize: 10, color: Theme.of(context).colorScheme.onSurfaceVariant)),
+        Text(
+          name,
+          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+        ),
+        Text(
+          hex,
+          style: TextStyle(
+            fontSize: 10,
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
+          ),
+        ),
       ],
     );
   }

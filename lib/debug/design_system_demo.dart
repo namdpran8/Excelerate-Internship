@@ -40,7 +40,7 @@ class LivingDesignSystemPage extends StatelessWidget {
             color: Theme.of(context).colorScheme.primary,
           )),
           const SizedBox(height: 8),
-          Text('To the Excelerate Design System', style: Theme.of(context).textTheme.titleMedium?.copyWith(
+          Text('To the Excelerate Design', style: Theme.of(context).textTheme.titleMedium?.copyWith(
             color: Theme.of(context).colorScheme.onSurfaceVariant,
           )),
           const SizedBox(height: 32),

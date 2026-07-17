@@ -20,9 +20,7 @@ export 'tokens/tokens.dart';
 // ──────────────────────────────────────────────────────────────────────────────
 // Theme — color schemes, typography, assembled ThemeData
 // ──────────────────────────────────────────────────────────────────────────────
-export 'theme/app_theme.dart';
-export 'theme/ex_color_scheme.dart';
-export 'theme/ex_typography.dart';
+export 'theme/theme.dart';
 
 // ──────────────────────────────────────────────────────────────────────────────
 // Components — buttons, cards, inputs, feedback, layout

@@ -3,9 +3,9 @@
 /// Organized by category:
 /// - **Buttons**: [PrimaryButton], [SecondaryButton]
 /// - **Cards**: [ExpressiveCard], [ProgramCard]
-/// - **Inputs**: [CustomTextField], [CustomSearchBar]
+/// - **Inputs**: [ExTextField], [ExSearchBar]
 /// - **Feedback**: [EmptyState], [WavyLinearProgressIndicator], [WavyCircularProgressIndicator]
-/// - **Layout**: [SectionHeader], [CustomChip], [CustomAvatar]
+/// - **Layout**: [SectionHeader], [ExChip], [ExAvatar]
 library;
 
 export 'buttons/buttons.dart';

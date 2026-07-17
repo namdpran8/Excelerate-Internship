@@ -1,24 +1,24 @@
-# Excelerate Living Design System
+# Excelerate Design
 
-Welcome to the Excelerate Living Design System! This document serves as a guide for all team members (especially for UI/UX integration and global theme wiring) to understand how to use the pre-built, reusable components to build screens rapidly and consistently.
+Welcome to the Excelerate Design! This document serves as a guide for all team members (especially for UI/UX integration and global theme wiring) to understand how to use the pre-built, reusable components to build screens rapidly and consistently.
 
 ## Getting Started
 
 Instead of importing individual files for every widget, simply add this **single import** to the top of your Dart files:
 
 ```dart
-import 'package:excelerate_internship/design_system.dart';
+import 'package:excelerate_internship/design_system/design_system.dart';
 // Note: adjust the package name if your pubspec name differs, 
-// or use relative paths like import '../../design_system.dart';
+// or use relative paths like import '../../design_system/design_system.dart';
 ```
 
 ---
 
 ## The Global Theme
 
-The design system handles Material 3 Expression and Motion automatically. The central theme configuration is located in `lib/constants/theme.dart`.
+The design system handles Material 3 Expression and Motion automatically. The central theme configuration is located in `lib/design_system/theme/app_theme.dart`.
 
-To ensure all components look correct, `main.dart` should wrap the app like this:
+To ensure all components look correct, `app.dart` should wrap the app like this:
 ```dart
 MaterialApp(
   theme: AppTheme.lightTheme,
@@ -80,7 +80,7 @@ ExpressiveCard(
 ```
 
 **Program Card**
-A specialized composite card built on top of `ExpressiveCard`. Used to display courses, internships, or programs.
+A specialized composite card built on top of `ExpressiveCard`. Used to display courses, internships, or programs. Note: this has been moved out of the generic design system into `features/programs/widgets/`.
 ```dart
 ProgramCard(
   title: 'Flutter Internship',
@@ -94,20 +94,20 @@ ProgramCard(
 
 ### 3. Inputs & Forms
 
-**Custom Text Field**
+**Ex Text Field**
 A styled `TextFormField` with smooth borders and filled backgrounds.
 ```dart
-CustomTextField(
+ExTextField(
   hintText: 'Enter your email',
   prefixIcon: Icons.email,
   obscureText: false,
 )
 ```
 
-**Custom Search Bar**
+**Ex Search Bar**
 A specialized input specifically optimized for searching lists/content.
 ```dart
-CustomSearchBar(
+ExSearchBar(
   hintText: 'Search programs...',
   onChanged: (value) {
     // filter logic
@@ -156,10 +156,10 @@ SectionHeader(
 )
 ```
 
-**Custom Chip**
+**Ex Chip**
 A styled `FilterChip` for tags, categories, or filters. Includes implicit animations.
 ```dart
-CustomChip(
+ExChip(
   label: 'Design',
   isSelected: true,
   onSelected: (selected) {
@@ -168,10 +168,10 @@ CustomChip(
 )
 ```
 
-**Custom Avatar**
+**Ex Avatar**
 A unified profile picture widget that handles fallbacks gracefully.
 ```dart
-CustomAvatar(
+ExAvatar(
   imageUrl: 'https://...', // optional
   radius: 24,
 )
@@ -192,4 +192,4 @@ EmptyState(
 ## Best Practices
 - **Do not hardcode colors**. Always rely on `Theme.of(context).colorScheme...` if you need a specific color. Our `AppTheme` handles the dark/light mode mapping for you.
 - **Do not hardcode font families**. Use `Theme.of(context).textTheme`.
-- **Use the Barrel File**. Always import `design_system.dart` rather than pathing to individual files in `lib/widgets/...`. It keeps imports clean and avoids cyclic dependencies.
+- **Use the Barrel File**. Always import `design_system.dart` rather than pathing to individual files in `lib/design_system/components/...`. It keeps imports clean and avoids cyclic dependencies.

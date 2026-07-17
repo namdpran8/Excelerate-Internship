@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -117,6 +116,5 @@ class AppTheme {
     outlinedButtonTheme: _outlinedButtonTheme,
     pageTransitionsTheme: _pageTransitionsTheme,
     textTheme: _buildTextTheme(),
->>>>>>> 5529822 (Implement Material 3 Expressive design system)
   );
 }

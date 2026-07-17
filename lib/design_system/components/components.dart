@@ -1,11 +1,11 @@
 /// Barrel file for all Excelerate design system components.
 ///
 /// Organized by category:
-/// - **Buttons**: [PrimaryButton], [SecondaryButton]
-/// - **Cards**: [ExpressiveCard], [ProgramCard]
+/// - **Buttons**: [ExPrimaryButton], [ExSecondaryButton]
+/// - **Cards**: [ExCard], [ProgramCard]
 /// - **Inputs**: [ExTextField], [ExSearchBar]
 /// - **Feedback**: [EmptyState], [WavyLinearProgressIndicator], [WavyCircularProgressIndicator]
-/// - **Layout**: [SectionHeader], [ExChip], [ExAvatar]
+/// - **Layout**: [ExSectionHeader], [ExChip], [ExAvatar]
 library;
 
 export 'buttons/buttons.dart';

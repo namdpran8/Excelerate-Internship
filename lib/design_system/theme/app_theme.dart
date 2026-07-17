@@ -17,6 +17,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../tokens/radii.dart';
+import '../tokens/spacing.dart';
 import 'ex_color_scheme.dart';
 import 'ex_typography.dart';
 
@@ -33,18 +35,18 @@ class AppTheme {
   static final FilledButtonThemeData _filledButtonTheme = FilledButtonThemeData(
     style: FilledButton.styleFrom(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8.0),
+        borderRadius: ExRadii.borderRadiusFull,
       ),
-      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
+      padding: const EdgeInsets.symmetric(horizontal: ExSpacing.lg, vertical: ExSpacing.md),
     ),
   );
 
   static final OutlinedButtonThemeData _outlinedButtonTheme = OutlinedButtonThemeData(
     style: OutlinedButton.styleFrom(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8.0),
+        borderRadius: ExRadii.borderRadiusFull,
       ),
-      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
+      padding: const EdgeInsets.symmetric(horizontal: ExSpacing.lg, vertical: ExSpacing.md),
     ),
   );
 

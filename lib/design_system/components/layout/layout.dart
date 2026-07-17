@@ -3,4 +3,4 @@ library;
 
 export 'ex_avatar.dart';
 export 'ex_chip.dart';
-export 'section_header.dart';
+export 'ex_section_header.dart';

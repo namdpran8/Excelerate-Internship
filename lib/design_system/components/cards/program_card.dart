@@ -8,24 +8,25 @@
 /// ProgramCard(
 ///   title: 'Flutter Internship',
 ///   description: 'Learn Flutter by building real-world apps.',
-///   imageUrl: 'path/to/image.png',
-///   onTap: () => navigateToDetails(),
-/// )
+///   imageUrl: '',
+///   onTap: () {},
+/// ),
 /// ```
 import 'package:flutter/material.dart';
-import 'expressive_card.dart';
+
+import 'ex_card.dart';
 
 class ProgramCard extends StatelessWidget {
-  /// The program title displayed below the image area.
+  /// The title of the program.
   final String title;
 
-  /// A short description of the program (max 2 lines before ellipsis).
+  /// A short description of the program.
   final String description;
 
-  /// URL or asset path for the program image (placeholder shown if empty).
+  /// URL for the program's header image.
   final String imageUrl;
 
-  /// Callback when the entire card is tapped.
+  /// Action when the card is tapped.
   final VoidCallback onTap;
 
   const ProgramCard({
@@ -38,14 +39,16 @@ class ProgramCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ExpressiveCard(
+    return ExCard(
       onTap: onTap,
       padding: EdgeInsets.zero,
       child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              height: 120,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // Image placeholder for demo
+          Container(
+            height: 140,
               width: double.infinity,
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.surfaceContainerHighest,

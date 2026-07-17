@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:material3_expressive_loading_indicator/material3_expressive_loading_indicator.dart';
-import '../design_system.dart'; // Unified global design system import
+import 'package:excelerate_internship/design_system/design_system.dart';
 
 class LivingDesignSystemPage extends StatelessWidget {
   const LivingDesignSystemPage({super.key});
@@ -73,7 +72,7 @@ class LivingDesignSystemPage extends StatelessWidget {
             _ColorSwatch(name: 'Primary Container', color: colors.primaryContainer, hex: '#FFB4A9'),
             _ColorSwatch(name: 'Secondary', color: colors.secondary, hex: '#A5D299'),
             _ColorSwatch(name: 'Surface', color: colors.surface, hex: '#141310'),
-            _ColorSwatch(name: 'Surface Variant', color: colors.flutter testsurfaceVariant, hex: '#363530'),
+            _ColorSwatch(name: 'Surface Variant', color: colors.surfaceVariant, hex: '#363530'),
             _ColorSwatch(name: 'Error', color: colors.error, hex: '#FFB4AB'),
           ],
         ),
@@ -101,12 +100,12 @@ class LivingDesignSystemPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildSectionTitle('Buttons', context),
-        PrimaryButton(onPressed: () {}, child: const Text('Primary Default')),
-        _buildDocNote('PrimaryButton\nHeight: 52\nRadius: 8', context),
-        PrimaryButton(onPressed: null, child: const Text('Primary Disabled')),
-        _buildDocNote('PrimaryButton (onPressed: null)', context),
-        SecondaryButton(onPressed: () {}, child: const Text('Secondary Default')),
-        _buildDocNote('SecondaryButton\nHeight: 52\nRadius: 8', context),
+        ExPrimaryButton(onPressed: () {}, child: const Text('Primary Default')),
+        _buildDocNote('ExPrimaryButton\nHeight: 52\nRadius: 8', context),
+        ExPrimaryButton(onPressed: null, child: const Text('Primary Disabled')),
+        _buildDocNote('ExPrimaryButton (onPressed: null)', context),
+        ExSecondaryButton(onPressed: () {}, child: const Text('Secondary Default')),
+        _buildDocNote('ExSecondaryButton\nHeight: 52\nRadius: 8', context),
       ],
     );
   }
@@ -116,14 +115,14 @@ class LivingDesignSystemPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildSectionTitle('Inputs', context),
-        const CustomTextField(
+        const ExTextField(
           labelText: 'Email',
           hintText: 'Enter your email',
           prefixIcon: Icon(Icons.email),
         ),
-        _buildDocNote('CustomTextField\nfloating label & prefixIcon', context),
-        const CustomSearchBar(hintText: 'Search programs...'),
-        _buildDocNote('CustomSearchBar\nPill-shaped, filled', context),
+        _buildDocNote('ExTextField\nfloating label & prefixIcon', context),
+        const ExSearchBar(hintText: 'Search programs...'),
+        _buildDocNote('ExSearchBar\nPill-shaped, filled', context),
       ],
     );
   }
@@ -133,7 +132,7 @@ class LivingDesignSystemPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildSectionTitle('Cards', context),
-        ExpressiveCard(
+        ExCard(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -143,7 +142,7 @@ class LivingDesignSystemPage extends StatelessWidget {
             ],
           ),
         ),
-        _buildDocNote('ExpressiveCard\nPadding: 24\nRadius: 16', context),
+        _buildDocNote('ExCard\nPadding: 24\nRadius: 16', context),
         ProgramCard(
           title: 'Advanced UI/UX',
           description: 'Master Figma and design systems.',
@@ -163,13 +162,13 @@ class LivingDesignSystemPage extends StatelessWidget {
         Wrap(
           spacing: 16,
           children: [
-            PrimaryButton(
+            ExPrimaryButton(
               onPressed: () {
                 ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('This is a Snackbar!')));
               },
               child: const Text('Show Snackbar'),
             ),
-            SecondaryButton(
+            ExSecondaryButton(
               onPressed: () {
                 showDialog(
                   context: context,
@@ -234,18 +233,18 @@ class LivingDesignSystemPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildSectionTitle('Misc Components', context),
-        const SectionHeader(title: 'My Programs', onSeeAll: null),
-        _buildDocNote('SectionHeader', context),
-        const CustomAvatar(initials: 'PK'),
-        _buildDocNote('CustomAvatar', context),
+        const ExSectionHeader(title: 'My Programs', onTrailingPressed: null),
+        _buildDocNote('ExSectionHeader', context),
+        const ExAvatar(initials: 'PK'),
+        _buildDocNote('ExAvatar', context),
         Wrap(
           spacing: 8,
           children: [
-            CustomChip(label: 'Selected', isSelected: true, onSelected: (v) {}),
-            CustomChip(label: 'Unselected', isSelected: false, onSelected: (v) {}),
+            ExChip(label: 'Selected', isSelected: true, onSelected: (v) {}),
+            ExChip(label: 'Unselected', isSelected: false, onSelected: (v) {}),
           ],
         ),
-        _buildDocNote('CustomChip\nPadding: 12x8', context),
+        _buildDocNote('ExChip\nPadding: 12x8', context),
         const EmptyState(message: 'No programs found.', icon: Icons.school),
         _buildDocNote('EmptyState', context),
       ],

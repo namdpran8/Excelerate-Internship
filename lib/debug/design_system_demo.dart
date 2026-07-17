@@ -23,10 +23,7 @@ class LivingDesignSystemPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Guard: only render in debug builds.
-    if (!kDebugMode) {
-      return const SizedBox.shrink();
-    }
+    // Removed in-build debug guard, handled in router registration now.
 
     return Scaffold(
       appBar: AppBar(
@@ -121,12 +118,12 @@ class LivingDesignSystemPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildSectionTitle('Buttons', context),
-        PrimaryButton(onPressed: () {}, child: const Text('Primary Default')),
-        _buildDocNote('PrimaryButton\nHeight: 52\nRadius: 8', context),
-        PrimaryButton(onPressed: null, child: const Text('Primary Disabled')),
-        _buildDocNote('PrimaryButton (onPressed: null)', context),
-        SecondaryButton(onPressed: () {}, child: const Text('Secondary Default')),
-        _buildDocNote('SecondaryButton\nHeight: 52\nRadius: 8', context),
+        ExPrimaryButton(onPressed: () {}, child: const Text('Primary Default')),
+        _buildDocNote('ExPrimaryButton\nHeight: 52\nRadius: Stadium', context),
+        ExPrimaryButton(onPressed: null, child: const Text('Primary Disabled')),
+        _buildDocNote('ExPrimaryButton (onPressed: null)', context),
+        ExSecondaryButton(onPressed: () {}, child: const Text('Secondary Default')),
+        _buildDocNote('ExSecondaryButton\nHeight: 52\nRadius: Stadium', context),
       ],
     );
   }
@@ -153,7 +150,7 @@ class LivingDesignSystemPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildSectionTitle('Cards', context),
-        ExpressiveCard(
+        ExCard(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -163,7 +160,7 @@ class LivingDesignSystemPage extends StatelessWidget {
             ],
           ),
         ),
-        _buildDocNote('ExpressiveCard\nPadding: 24\nRadius: 16', context),
+        _buildDocNote('ExCard\nPadding: 24\nRadius: 16', context),
         ProgramCard(
           title: 'Advanced UI/UX',
           description: 'Master Figma and design systems.',
@@ -183,13 +180,13 @@ class LivingDesignSystemPage extends StatelessWidget {
         Wrap(
           spacing: 16,
           children: [
-            PrimaryButton(
+            ExPrimaryButton(
               onPressed: () {
                 ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('This is a Snackbar!')));
               },
               child: const Text('Show Snackbar'),
             ),
-            SecondaryButton(
+            ExSecondaryButton(
               onPressed: () {
                 showDialog(
                   context: context,
@@ -254,8 +251,8 @@ class LivingDesignSystemPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildSectionTitle('Misc Components', context),
-        const SectionHeader(title: 'My Programs', onSeeAll: null),
-        _buildDocNote('SectionHeader', context),
+        const ExSectionHeader(title: 'My Programs', onTrailingPressed: null),
+        _buildDocNote('ExSectionHeader', context),
         const ExAvatar(initials: 'PK'),
         _buildDocNote('ExAvatar', context),
         Wrap(

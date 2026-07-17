@@ -1,32 +1,12 @@
 import 'package:flutter/material.dart';
+import 'app.dart';
 
-import 'constants/theme.dart';
-import 'routes/app_routes.dart';
-import 'screens/home_screen.dart';
-import 'screens/login_screen.dart';
-import 'screens/program_details_screen.dart';
-import 'screens/program_listing_screen.dart';
+/// Application entry point.
+///
+/// Delegates all configuration (theme, routing, behavior) to [ExcelerateLearningApp]
+/// in [app.dart]. This file should remain minimal — any app-level setup
+/// (Firebase.initializeApp, etc.) goes here before [runApp].
 
 void main() {
   runApp(const ExcelerateLearningApp());
-}
-
-class ExcelerateLearningApp extends StatelessWidget {
-  const ExcelerateLearningApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Excelerate Learning Platform',
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.lightTheme,
-      initialRoute: AppRoutes.login,
-      routes: {
-        AppRoutes.login: (context) => const LoginScreen(),
-        AppRoutes.home: (context) => const HomeScreen(),
-        AppRoutes.programs: (context) => const ProgramListingScreen(),
-        AppRoutes.details: (context) => const ProgramDetailsScreen(),
-      },
-    );
-  }
 }

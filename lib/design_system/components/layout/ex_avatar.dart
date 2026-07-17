@@ -4,21 +4,22 @@
 /// Scales font size proportionally to [radius].
 ///
 /// ```dart
-/// CustomAvatar(
+/// ExAvatar(
 ///   initials: 'PK',
 ///   radius: 24,
 /// )
 /// ```
 import 'package:flutter/material.dart';
 
-class CustomAvatar extends StatelessWidget {
+/// Excelerate-styled circular avatar.
+class ExAvatar extends StatelessWidget {
   /// One or two characters to display (e.g., first + last initial).
   final String initials;
 
   /// The avatar's radius in logical pixels. Defaults to 20.
   final double radius;
 
-  const CustomAvatar({
+  const ExAvatar({
     super.key,
     required this.initials,
     this.radius = 20.0,

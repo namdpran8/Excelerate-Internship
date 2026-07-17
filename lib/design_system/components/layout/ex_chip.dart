@@ -4,7 +4,7 @@
 /// tint, and bold text on selection.
 ///
 /// ```dart
-/// CustomChip(
+/// ExChip(
 ///   label: 'Design',
 ///   isSelected: true,
 ///   onSelected: (selected) => toggleFilter(selected),
@@ -12,7 +12,8 @@
 /// ```
 import 'package:flutter/material.dart';
 
-class CustomChip extends StatelessWidget {
+/// Excelerate-styled filter chip for tags, categories, or filters.
+class ExChip extends StatelessWidget {
   /// The text label displayed inside the chip.
   final String label;
 
@@ -25,7 +26,7 @@ class CustomChip extends StatelessWidget {
   /// Called when the chip's delete icon is tapped (if shown).
   final VoidCallback? onDeleted;
 
-  const CustomChip({
+  const ExChip({
     super.key,
     required this.label,
     this.isSelected = false,

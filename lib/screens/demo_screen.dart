@@ -116,14 +116,14 @@ class LivingDesignSystemPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildSectionTitle('Inputs', context),
-        const CustomTextField(
+        const ExTextField(
           labelText: 'Email',
           hintText: 'Enter your email',
           prefixIcon: Icon(Icons.email),
         ),
-        _buildDocNote('CustomTextField\nfloating label & prefixIcon', context),
-        const CustomSearchBar(hintText: 'Search programs...'),
-        _buildDocNote('CustomSearchBar\nPill-shaped, filled', context),
+        _buildDocNote('ExTextField\nfloating label & prefixIcon', context),
+        const ExSearchBar(hintText: 'Search programs...'),
+        _buildDocNote('ExSearchBar\nPill-shaped, filled', context),
       ],
     );
   }
@@ -236,16 +236,16 @@ class LivingDesignSystemPage extends StatelessWidget {
         _buildSectionTitle('Misc Components', context),
         const SectionHeader(title: 'My Programs', onSeeAll: null),
         _buildDocNote('SectionHeader', context),
-        const CustomAvatar(initials: 'PK'),
-        _buildDocNote('CustomAvatar', context),
+        const ExAvatar(initials: 'PK'),
+        _buildDocNote('ExAvatar', context),
         Wrap(
           spacing: 8,
           children: [
-            CustomChip(label: 'Selected', isSelected: true, onSelected: (v) {}),
-            CustomChip(label: 'Unselected', isSelected: false, onSelected: (v) {}),
+            ExChip(label: 'Selected', isSelected: true, onSelected: (v) {}),
+            ExChip(label: 'Unselected', isSelected: false, onSelected: (v) {}),
           ],
         ),
-        _buildDocNote('CustomChip\nPadding: 12x8', context),
+        _buildDocNote('ExChip\nPadding: 12x8', context),
         const EmptyState(message: 'No programs found.', icon: Icons.school),
         _buildDocNote('EmptyState', context),
       ],

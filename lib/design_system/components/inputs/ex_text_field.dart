@@ -5,7 +5,7 @@
 /// underline on focus.
 ///
 /// ```dart
-/// CustomTextField(
+/// ExTextField(
 ///   labelText: 'Email',
 ///   hintText: 'Enter your email',
 ///   prefixIcon: Icon(Icons.email),
@@ -13,7 +13,11 @@
 /// ```
 import 'package:flutter/material.dart';
 
-class CustomTextField extends StatelessWidget {
+/// Excelerate-styled text input field.
+///
+/// See also:
+///   - [ExSearchBar] for search-specific inputs.
+class ExTextField extends StatelessWidget {
   /// Placeholder text shown when the field is empty.
   final String? hintText;
 
@@ -26,7 +30,7 @@ class CustomTextField extends StatelessWidget {
   /// Controller for reading or manipulating the field's text value.
   final TextEditingController? controller;
 
-  const CustomTextField({
+  const ExTextField({
     super.key,
     this.hintText,
     this.labelText,

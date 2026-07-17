@@ -5,21 +5,25 @@
 /// using [surfaceContainerHigh].
 ///
 /// ```dart
-/// CustomSearchBar(
+/// ExSearchBar(
 ///   hintText: 'Search programs...',
 ///   onChanged: (query) => filterResults(query),
 /// )
 /// ```
 import 'package:flutter/material.dart';
 
-class CustomSearchBar extends StatelessWidget {
+/// Excelerate-styled search input field.
+///
+/// See also:
+///   - [ExTextField] for general-purpose text input.
+class ExSearchBar extends StatelessWidget {
   /// Placeholder text shown when the search field is empty.
   final String hintText;
 
   /// Called each time the search text changes.
   final ValueChanged<String>? onChanged;
 
-  const CustomSearchBar({
+  const ExSearchBar({
     super.key,
     this.hintText = 'Search...',
     this.onChanged,

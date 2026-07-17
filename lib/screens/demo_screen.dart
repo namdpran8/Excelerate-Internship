@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:material3_expressive_loading_indicator/material3_expressive_loading_indicator.dart';
-import '../design_system.dart'; // Unified global design system import
+import '../design_system/design_system.dart'; // Unified global design system import
 
 class LivingDesignSystemPage extends StatelessWidget {
   const LivingDesignSystemPage({super.key});

@@ -1,91 +1,99 @@
 # Excelerate Learning Platform
 
-## Project Vision
+## Description
 
-Create an accessible and user-friendly Flutter mobile learning platform where learners can discover programs, enroll in courses, monitor their learning progress, and manage their profiles.
+Excelerate is a Flutter learning platform where learners can discover programs and monitor their learning. It will also provide administrators with tools to manage learners, programs, and announcements.
 
-The application will also provide administrators with tools to manage learning programs, users, and announcements.
+## Week 2 Deliverables
 
-## Objectives
+- Login Screen
+- Home Screen
+- Program Listing Screen
+- Program Details Screen
+- Working navigation
+- README screenshots
+- Clear Git history
+- Optional demo video
 
-- Build a cross-platform mobile application using Flutter
-- Provide separate learner and administrator experiences
-- Allow learners to browse and view learning programs
-- Allow learners to enroll and track learning progress
-- Allow administrators to manage programs and users
-- Allow administrators to create and publish announcements
-- Maintain a clear and scalable Flutter project structure
-- Use GitHub for collaboration and version control
+## Project Structure
 
-## User Types
-
-### Learner
-
-- Complete onboarding
-- Register and log in
-- Browse learning programs
-- Search and filter programs
-- View program details
-- Enroll in programs
-- Track learning progress
-- View achievements and certificates
-- Manage their profile
-
-### Administrator
-
-- Access the admin dashboard
-- View platform activity
-- Manage learning programs
-- Manage learner and administrator accounts
-- Create and publish announcements
+```text
+lib/
+├── constants/
+│   └── theme.dart
+├── routes/
+│   └── app_routes.dart
+├── screens/
+│   ├── login_screen.dart
+│   ├── home_screen.dart
+│   ├── program_listing_screen.dart
+│   └── program_details_screen.dart
+├── widgets/
+│   └── README.md
+├── models/
+├── services/
+└── main.dart
+```
 
 ## Navigation Flow
 
-### Learner Flow
+Login → Home → Program Listing → Program Details
 
-```
-Onboarding
-→ Login / Sign Up
-→ Home
-→ Program Listing
-→ Program Details
-→ Enroll
-→ My Learning / Progress
-→ Profile
-```
+## Named Routes
 
-### Administrator Flow
+- `/login`
+- `/home`
+- `/programs`
+- `/details`
 
-```
-Login
-→ Admin Dashboard
-→ Program Management
-→ User Management
-→ Announcements Management
+When the Program model is available, navigate from the program listing to program details with this contract:
+
+```dart
+Navigator.pushNamed(
+  context,
+  AppRoutes.details,
+  arguments: program,
+);
 ```
 
-## Initial Project Structure
+The Program Details screen will retrieve the selected program from `ModalRoute.of(context)!.settings.arguments`.
 
-```
-lib/
-├── main.dart
-├── screens/
-│   ├── authentication/
-│   ├── learner/
-│   └── admin/
-├── widgets/
-├── models/
-├── services/
-└── routes/
+## How to Run
+
+```shell
+flutter pub get
+flutter run
 ```
 
-## Technology
+## Team Responsibilities
 
-- Flutter
-- Dart
-- Git
-- GitHub
+- Lords Chilled Life — Team Lead, PDF compilation and submission
+- Iqra Shahzadi — Login Screen
+- Bilal Feroz Khan — Project setup, ThemeData, routes, GitHub integration and README
+- Ibrahim Salman — Home Screen
+- Faith Wahome — Program Listing Screen and Program model
+- Pranshu Namdeo — Program Details Screen, branding and shared component design
 
-## Current Status
+## Screenshots
 
-Week 1: Initial Flutter project setup, repository structure, README documentation, and navigation-flow definition.
+- Login Screen — To be added
+- Home Screen — To be added
+- Program Listing Screen — To be added
+- Program Details Screen — To be added
+
+## Branch Workflow
+
+- `setup/shared-components`
+- `feature/login-screen`
+- `feature/home-screen`
+- `feature/program-listing`
+- `feature/program-details`
+
+Each team member should:
+
+1. Pull the latest `main` branch.
+2. Create or switch to their assigned branch.
+3. Build only their assigned screen.
+4. Commit with a meaningful message.
+5. Push the branch.
+6. Open a pull request into `main`.

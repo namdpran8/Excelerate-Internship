@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
 
+import 'constants/theme.dart';
+import 'routes/app_routes.dart';
+import 'screens/home_screen.dart';
+import 'screens/login_screen.dart';
+import 'screens/program_details_screen.dart';
+import 'screens/program_listing_screen.dart';
+
 void main() {
   runApp(const ExcelerateLearningApp());
 }
@@ -11,23 +18,15 @@ class ExcelerateLearningApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Excelerate Learning Platform',
-      home: const HomePage(),
-    );
-  }
-}
-
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Excelerate Learning Platform'),
-      ),
-      body: const Center(
-        child: Text('Week 1 Project Setup'),
-      ),
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.lightTheme,
+      initialRoute: AppRoutes.login,
+      routes: {
+        AppRoutes.login: (context) => const LoginScreen(),
+        AppRoutes.home: (context) => const HomeScreen(),
+        AppRoutes.programs: (context) => const ProgramListingScreen(),
+        AppRoutes.details: (context) => const ProgramDetailsScreen(),
+      },
     );
   }
 }

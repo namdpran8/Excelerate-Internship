@@ -43,3 +43,8 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+test/design_system_test.dart
+pr4.diff
+pr3.diff
+pr4-latest.diff
+

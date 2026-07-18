@@ -43,3 +43,6 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+pr4-latest.diff
+pr4.diff
+pr3.diff

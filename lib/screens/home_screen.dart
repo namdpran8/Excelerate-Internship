@@ -1,285 +1,329 @@
 import 'package:flutter/material.dart';
-import 'section_header.dart';
-
-/// Excelerate color theme (sampled from the wireframes)
-class AppColors {
-  static const maroon = Color(0xFF8B1E2D);
-  static const maroonDark = Color(0xFF6E1622);
-  static const cream = Color(0xFFFBF3E7);
-  static const card = Color(0xFFFFFFFF);
-  static const textDark = Color(0xFF241412);
-  static const textGrey = Color(0xFF7A7270);
-  static const chipBg = Color(0xFFF3E3D3);
-}
+import '../design_system/design_system.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.cream,
-      appBar: AppBar(
-        backgroundColor: AppColors.cream,
-        elevation: 0,
-        centerTitle: false,
-        title: Row(
-          children: const [
-            Icon(Icons.school, color: AppColors.maroon, size: 26),
-            SizedBox(width: 8),
-            Text(
-              'Excelerate',
-              style: TextStyle(
-                color: AppColors.maroon,
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              ),
-            ),
-          ],
-        ),
-        actions: [
-          CircleAvatar(
-            radius: 18,
-            backgroundColor: AppColors.chipBg,
-            child: const Icon(Icons.person, color: AppColors.maroon, size: 20),
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
+    return ExScaffold(
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: 0,
+        destinations: const [
+          NavigationDestination(
+            icon: Icon(Icons.home),
+            label: 'Home',
           ),
-          const SizedBox(width: 16),
+          NavigationDestination(
+            icon: Icon(Icons.school_outlined),
+            label: 'Programs',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.menu_book_outlined),
+            label: 'Learning',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.person_outline),
+            label: 'Profile',
+          ),
         ],
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Welcome back!',
-                style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.textDark,
-                ),
-              ),
-              const SizedBox(height: 4),
-              const Text(
-                "You're making great progress.",
-                style: TextStyle(fontSize: 13, color: AppColors.textGrey),
-              ),
-              const SizedBox(height: 24),
-
-              // ---------------- Programs ----------------
-              const SectionHeader(title: 'Programs'),
-              _ProgramsCard(
-                onTap: () => Navigator.pushNamed(context, '/programs'),
-              ),
-              const SizedBox(height: 28),
-
-              // ---------------- Announcements ----------------
-              const SectionHeader(title: 'Announcements'),
-              const _AnnouncementCard(
-                title: 'New Cohort Starting Aug 1st',
-                body:
-                    'Enrollment for the Applied Machine Learning program '
-                    'closes this Friday. Secure your seat today!',
-                tag: 'Deadline',
-              ),
-              const SizedBox(height: 28),
-
-              // ---------------- Quick Links ----------------
-              const SectionHeader(title: 'Quick Links'),
+              // Custom Header Row
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  _QuickLinkButton(
-                    icon: Icons.person_outline,
-                    label: 'Profile',
-                    onTap: () => Navigator.pushNamed(context, '/profile'),
+                  Expanded(
+                    child: Container(
+                      height: 48,
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      decoration: BoxDecoration(
+                        color: colorScheme.surfaceContainerHighest,
+                        borderRadius: BorderRadius.circular(24),
+                      ),
+                      child: Row(
+                        children: [
+                          Icon(Icons.search, color: colorScheme.onSurfaceVariant),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Text(
+                              'Search courses...',
+                              style: theme.textTheme.bodyMedium?.copyWith(
+                                color: colorScheme.onSurfaceVariant,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                  _QuickLinkButton(
-                    icon: Icons.feedback_outlined,
-                    label: 'Feedback',
-                    onTap: () => Navigator.pushNamed(context, '/feedback'),
+                  const SizedBox(width: 16),
+                  Text(
+                    'Excelerate',
+                    style: theme.textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: colorScheme.onSurface,
+                    ),
                   ),
-                  _QuickLinkButton(
-                    icon: Icons.settings_outlined,
-                    label: 'Settings',
-                    onTap: () => Navigator.pushNamed(context, '/settings'),
+                  const SizedBox(width: 16),
+                  CircleAvatar(
+                    radius: 20,
+                    backgroundColor: colorScheme.surfaceContainerHighest,
+                    backgroundImage: const NetworkImage(
+                        'https://i.pravatar.cc/150?u=a042581f4e29026704d'),
                   ),
                 ],
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 32),
+
+              // Welcome Section
+              Text(
+                'Welcome back, Pranshu',
+                style: theme.textTheme.headlineMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: colorScheme.onSurface,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                "You're making great progress.",
+                style: theme.textTheme.titleMedium?.copyWith(
+                  color: colorScheme.onSurfaceVariant,
+                ),
+              ),
+              const SizedBox(height: 32),
+
+              // Continue Learning
+              Text(
+                'Continue Learning',
+                style: theme.textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: colorScheme.onSurface,
+                ),
+              ),
+              const SizedBox(height: 16),
+              SizedBox(
+                height: 200,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    _buildContinueLearningCard(
+                      context,
+                      icon: Icons.code,
+                      title: 'Advanced Python Data Structures',
+                      subtitle:
+                          'Master complex algorithms and memory management techniques for high-...',
+                      progress: 0.75,
+                      progressText: '75% Complete',
+                    ),
+                    const SizedBox(width: 16),
+                    _buildContinueLearningCard(
+                      context,
+                      icon: Icons.design_services,
+                      title: 'UX/UI Foundations',
+                      subtitle:
+                          'Learn to apply aesthetic principles and organic layouts to digital...',
+                      progress: 0.30,
+                      progressText: '30% Complete',
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 32),
+
+              // Popular Programs
+              ExSectionHeader(
+                title: 'Popular Programs',
+                trailingText: 'See all →',
+                onTrailingPressed: () {},
+              ),
+              const SizedBox(height: 16),
+              _buildPopularProgramCard(
+                context,
+                title: 'Strategic Leadership in Tech',
+                subtitle:
+                    'Develop core competencies for managing cross-functional...',
+                rating: '4.9',
+                learners: '12k',
+                placeholderColor: Colors.orange.shade200,
+              ),
+              const SizedBox(height: 16),
+              _buildPopularProgramCard(
+                context,
+                title: 'Full-Stack Javascript...',
+                subtitle:
+                    'From Node.js backend architecture to responsive React frontends.',
+                rating: '4.8',
+                learners: '8.5k',
+                placeholderColor: Colors.blue.shade200,
+              ),
+              const SizedBox(height: 16),
+              _buildPopularProgramCard(
+                context,
+                title: 'Motion Design Physics',
+                subtitle:
+                    'Applying natural spring mechanics to digital interface animations.',
+                rating: '4.9',
+                learners: '4.2k',
+                placeholderColor: Colors.pink.shade100,
+              ),
             ],
           ),
         ),
       ),
     );
   }
-}
 
-/// Card/button linking into the Program Listing screen.
-class _ProgramsCard extends StatelessWidget {
-  final VoidCallback onTap;
-  const _ProgramsCard({required this.onTap});
+  Widget _buildContinueLearningCard(
+    BuildContext context, {
+    required IconData icon,
+    required String title,
+    required String subtitle,
+    required double progress,
+    required String progressText,
+  }) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
 
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(16),
-      child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.all(18),
-        decoration: BoxDecoration(
-          color: AppColors.maroon,
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.maroonDark.withOpacity(0.25),
-              blurRadius: 10,
-              offset: const Offset(0, 4),
-            ),
-          ],
-        ),
-        child: Row(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.15),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: const Icon(Icons.menu_book_rounded,
-                  color: Colors.white, size: 26),
-            ),
-            const SizedBox(width: 14),
-            const Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Browse Programs',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
-                  ),
-                  SizedBox(height: 2),
-                  Text(
-                    'Explore courses across Design, Engineering & Business',
-                    style: TextStyle(color: Colors.white70, fontSize: 12),
-                  ),
-                ],
-              ),
-            ),
-            const Icon(Icons.arrow_forward_ios, color: Colors.white, size: 16),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-/// Sample announcement card.
-class _AnnouncementCard extends StatelessWidget {
-  final String title;
-  final String body;
-  final String tag;
-
-  const _AnnouncementCard({
-    required this.title,
-    required this.body,
-    required this.tag,
-  });
-
-  @override
-  Widget build(BuildContext context) {
     return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(16),
+      width: 280,
+      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: AppColors.card,
+        color: colorScheme.surfaceContainer,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.chipBg),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              CircleAvatar(
+                backgroundColor: colorScheme.secondaryContainer,
+                child: Icon(icon, color: colorScheme.onSecondaryContainer),
+              ),
               Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 decoration: BoxDecoration(
-                  color: AppColors.chipBg,
-                  borderRadius: BorderRadius.circular(20),
+                  color: colorScheme.surface,
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(color: colorScheme.outlineVariant),
                 ),
                 child: Text(
-                  tag,
-                  style: const TextStyle(
-                    fontSize: 11,
+                  progressText,
+                  style: textTheme.labelSmall?.copyWith(
                     fontWeight: FontWeight.w600,
-                    color: AppColors.maroon,
+                    color: colorScheme.onSurfaceVariant,
                   ),
                 ),
               ),
-              const Spacer(),
-              const Icon(Icons.campaign_outlined,
-                  color: AppColors.maroon, size: 20),
             ],
           ),
-          const SizedBox(height: 10),
+          const Spacer(),
           Text(
             title,
-            style: const TextStyle(
-              fontSize: 15,
+            style: textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.bold,
-              color: AppColors.textDark,
+              color: colorScheme.onSurface,
             ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
-          const SizedBox(height: 6),
+          const SizedBox(height: 8),
           Text(
-            body,
-            style: const TextStyle(fontSize: 13, color: AppColors.textGrey),
+            subtitle,
+            style: textTheme.bodySmall?.copyWith(
+              color: colorScheme.onSurfaceVariant,
+            ),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
+          const SizedBox(height: 16),
+          LinearProgressIndicator(
+            value: progress,
+            backgroundColor: colorScheme.surfaceContainerHighest,
+            color: colorScheme.primary,
+            minHeight: 6,
+            borderRadius: BorderRadius.circular(3),
           ),
         ],
       ),
     );
   }
-}
 
-/// A single icon + label quick-link button.
-class _QuickLinkButton extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final VoidCallback onTap;
+  Widget _buildPopularProgramCard(
+    BuildContext context, {
+    required String title,
+    required String subtitle,
+    required String rating,
+    required String learners,
+    required Color placeholderColor,
+  }) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
 
-  const _QuickLinkButton({
-    required this.icon,
-    required this.label,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(16),
-      child: Column(
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: colorScheme.surfaceContainerLow,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Row(
         children: [
           Container(
-            padding: const EdgeInsets.all(16),
+            width: 100,
+            height: 100,
             decoration: BoxDecoration(
-              color: AppColors.card,
-              shape: BoxShape.circle,
-              border: Border.all(color: AppColors.chipBg),
+              color: placeholderColor,
+              borderRadius: BorderRadius.circular(12),
             ),
-            child: Icon(icon, color: AppColors.maroon, size: 24),
+            child: const Icon(Icons.image_outlined, color: Colors.black26, size: 32),
           ),
-          const SizedBox(height: 6),
-          Text(
-            label,
-            style: const TextStyle(fontSize: 12, color: AppColors.textDark),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: colorScheme.onSurface,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  subtitle,
+                  style: textTheme.bodySmall?.copyWith(
+                    color: colorScheme.onSurfaceVariant,
+                  ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    Icon(Icons.star_outline, size: 16, color: colorScheme.primary),
+                    const SizedBox(width: 4),
+                    Text(
+                      '$rating ($learners learners)',
+                      style: textTheme.labelSmall?.copyWith(
+                        color: colorScheme.onSurfaceVariant,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ],
       ),

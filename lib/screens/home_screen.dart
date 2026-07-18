@@ -1,14 +1,332 @@
 import 'package:flutter/material.dart';
+import '../design_system/design_system.dart';
 
-// Temporary placeholder to be replaced by the assigned screen owner.
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Home Screen')),
-      body: const Center(child: Text('Home Screen')),
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
+    return ExScaffold(
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: 0,
+        destinations: const [
+          NavigationDestination(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.school_outlined),
+            label: 'Programs',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.menu_book_outlined),
+            label: 'Learning',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.person_outline),
+            label: 'Profile',
+          ),
+        ],
+      ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Custom Header Row
+              Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      height: 48,
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      decoration: BoxDecoration(
+                        color: colorScheme.surfaceContainerHighest,
+                        borderRadius: BorderRadius.circular(24),
+                      ),
+                      child: Row(
+                        children: [
+                          Icon(Icons.search, color: colorScheme.onSurfaceVariant),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Text(
+                              'Search courses...',
+                              style: theme.textTheme.bodyMedium?.copyWith(
+                                color: colorScheme.onSurfaceVariant,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Text(
+                    'Excelerate',
+                    style: theme.textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: colorScheme.onSurface,
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  CircleAvatar(
+                    radius: 20,
+                    backgroundColor: colorScheme.surfaceContainerHighest,
+                    backgroundImage: const NetworkImage(
+                        'https://i.pravatar.cc/150?u=a042581f4e29026704d'),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 32),
+
+              // Welcome Section
+              Text(
+                'Welcome back, Pranshu',
+                style: theme.textTheme.headlineMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: colorScheme.onSurface,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                "You're making great progress.",
+                style: theme.textTheme.titleMedium?.copyWith(
+                  color: colorScheme.onSurfaceVariant,
+                ),
+              ),
+              const SizedBox(height: 32),
+
+              // Continue Learning
+              Text(
+                'Continue Learning',
+                style: theme.textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: colorScheme.onSurface,
+                ),
+              ),
+              const SizedBox(height: 16),
+              SizedBox(
+                height: 200,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    _buildContinueLearningCard(
+                      context,
+                      icon: Icons.code,
+                      title: 'Advanced Python Data Structures',
+                      subtitle:
+                          'Master complex algorithms and memory management techniques for high-...',
+                      progress: 0.75,
+                      progressText: '75% Complete',
+                    ),
+                    const SizedBox(width: 16),
+                    _buildContinueLearningCard(
+                      context,
+                      icon: Icons.design_services,
+                      title: 'UX/UI Foundations',
+                      subtitle:
+                          'Learn to apply aesthetic principles and organic layouts to digital...',
+                      progress: 0.30,
+                      progressText: '30% Complete',
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 32),
+
+              // Popular Programs
+              ExSectionHeader(
+                title: 'Popular Programs',
+                trailingText: 'See all →',
+                onTrailingPressed: () {},
+              ),
+              const SizedBox(height: 16),
+              _buildPopularProgramCard(
+                context,
+                title: 'Strategic Leadership in Tech',
+                subtitle:
+                    'Develop core competencies for managing cross-functional...',
+                rating: '4.9',
+                learners: '12k',
+                placeholderColor: Colors.orange.shade200,
+              ),
+              const SizedBox(height: 16),
+              _buildPopularProgramCard(
+                context,
+                title: 'Full-Stack Javascript...',
+                subtitle:
+                    'From Node.js backend architecture to responsive React frontends.',
+                rating: '4.8',
+                learners: '8.5k',
+                placeholderColor: Colors.blue.shade200,
+              ),
+              const SizedBox(height: 16),
+              _buildPopularProgramCard(
+                context,
+                title: 'Motion Design Physics',
+                subtitle:
+                    'Applying natural spring mechanics to digital interface animations.',
+                rating: '4.9',
+                learners: '4.2k',
+                placeholderColor: Colors.pink.shade100,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildContinueLearningCard(
+    BuildContext context, {
+    required IconData icon,
+    required String title,
+    required String subtitle,
+    required double progress,
+    required String progressText,
+  }) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
+    return Container(
+      width: 280,
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: colorScheme.surfaceContainer,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              CircleAvatar(
+                backgroundColor: colorScheme.secondaryContainer,
+                child: Icon(icon, color: colorScheme.onSecondaryContainer),
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                decoration: BoxDecoration(
+                  color: colorScheme.surface,
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(color: colorScheme.outlineVariant),
+                ),
+                child: Text(
+                  progressText,
+                  style: textTheme.labelSmall?.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: colorScheme.onSurfaceVariant,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const Spacer(),
+          Text(
+            title,
+            style: textTheme.titleMedium?.copyWith(
+              fontWeight: FontWeight.bold,
+              color: colorScheme.onSurface,
+            ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+          const SizedBox(height: 8),
+          Text(
+            subtitle,
+            style: textTheme.bodySmall?.copyWith(
+              color: colorScheme.onSurfaceVariant,
+            ),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
+          const SizedBox(height: 16),
+          LinearProgressIndicator(
+            value: progress,
+            backgroundColor: colorScheme.surfaceContainerHighest,
+            color: colorScheme.primary,
+            minHeight: 6,
+            borderRadius: BorderRadius.circular(3),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPopularProgramCard(
+    BuildContext context, {
+    required String title,
+    required String subtitle,
+    required String rating,
+    required String learners,
+    required Color placeholderColor,
+  }) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: colorScheme.surfaceContainerLow,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Row(
+        children: [
+          Container(
+            width: 100,
+            height: 100,
+            decoration: BoxDecoration(
+              color: placeholderColor,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: const Icon(Icons.image_outlined, color: Colors.black26, size: 32),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: colorScheme.onSurface,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  subtitle,
+                  style: textTheme.bodySmall?.copyWith(
+                    color: colorScheme.onSurfaceVariant,
+                  ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    Icon(Icons.star_outline, size: 16, color: colorScheme.primary),
+                    const SizedBox(width: 4),
+                    Text(
+                      '$rating ($learners learners)',
+                      style: textTheme.labelSmall?.copyWith(
+                        color: colorScheme.onSurfaceVariant,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

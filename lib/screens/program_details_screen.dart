@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../design_system/design_system.dart';
-
+import '../models/program.dart';
 class ProgramDetailsScreen extends StatelessWidget {
   const ProgramDetailsScreen({super.key});
 
@@ -9,6 +9,7 @@ class ProgramDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
+    final program = ModalRoute.of(context)?.settings.arguments as Program?;
 
     return ExScaffold(
       appBar: AppBar(
@@ -76,7 +77,7 @@ class ProgramDetailsScreen extends StatelessWidget {
 
             // Title
             Text(
-              'Advanced Sustainable\nArchitecture',
+              program?.title ?? 'Advanced Sustainable\nArchitecture',
               style: textTheme.headlineMedium?.copyWith(
                 fontWeight: FontWeight.w600,
                 height: 1.2,
@@ -86,12 +87,13 @@ class ProgramDetailsScreen extends StatelessWidget {
 
             // Description
             Text(
-              'Dive deep into the principles of eco-friendly building '
-              'design. This comprehensive program covers modern '
-              'materials, energy-efficient structures, and integrating '
-              'natural environments into urban planning. Perfect for '
-              'professionals looking to elevate their architectural '
-              'practice with sustainable methodologies.',
+              program?.description ??
+                  'Dive deep into the principles of eco-friendly building '
+                  'design. This comprehensive program covers modern '
+                  'materials, energy-efficient structures, and integrating '
+                  'natural environments into urban planning. Perfect for '
+                  'professionals looking to elevate their architectural '
+                  'practice with sustainable methodologies.',
               style: textTheme.bodyLarge?.copyWith(
                 color: colorScheme.onSurfaceVariant,
                 height: 1.5,
@@ -106,8 +108,8 @@ class ProgramDetailsScreen extends StatelessWidget {
                   _buildDetailRow(
                     context,
                     icon: Icons.access_time,
-                    title: 'Duration',
-                    subtitle: '12 Weeks (4 hours/week)',
+                    title: 'Duration & Schedule',
+                    subtitle: program?.schedule ?? '12 Weeks (4 hours/week)',
                   ),
                   const Divider(height: ExSpacing.lg),
                   _buildDetailRow(
@@ -120,8 +122,8 @@ class ProgramDetailsScreen extends StatelessWidget {
                   _buildDetailRow(
                     context,
                     icon: Icons.people_outline,
-                    title: 'Cohort Size',
-                    subtitle: 'Limited to 25 students',
+                    title: 'Eligibility',
+                    subtitle: program?.eligibility ?? 'Limited to 25 students',
                   ),
                 ],
               ),

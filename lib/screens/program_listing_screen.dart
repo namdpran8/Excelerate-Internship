@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../design_system/design_system.dart';
 import '../models/program.dart';
+import '../routes/app_routes.dart';
 
 class ProgramListingScreen extends StatelessWidget {
   const ProgramListingScreen({super.key});
@@ -127,7 +128,7 @@ class ProgramListingScreen extends StatelessWidget {
                         onPressed: () {
                           Navigator.pushNamed(
                             context,
-                            '/details',
+                            AppRoutes.details,
                             arguments: program,
                           );
                         },

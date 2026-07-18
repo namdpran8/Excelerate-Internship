@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import '../design_system/design_system.dart';
+import '../models/program.dart';
+import '../routes/app_routes.dart';
+import 'program_listing_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -12,6 +15,11 @@ class HomeScreen extends StatelessWidget {
     return ExScaffold(
       bottomNavigationBar: NavigationBar(
         selectedIndex: 0,
+        onDestinationSelected: (index) {
+          if (index == 1) {
+            Navigator.pushNamed(context, AppRoutes.programs);
+          }
+        },
         destinations: const [
           NavigationDestination(
             icon: Icon(Icons.home),
@@ -118,9 +126,7 @@ class HomeScreen extends StatelessWidget {
                     _buildContinueLearningCard(
                       context,
                       icon: Icons.code,
-                      title: 'Advanced Python Data Structures',
-                      subtitle:
-                          'Master complex algorithms and memory management techniques for high-...',
+                      program: ProgramListingScreen.programs[0],
                       progress: 0.75,
                       progressText: '75% Complete',
                     ),
@@ -128,9 +134,7 @@ class HomeScreen extends StatelessWidget {
                     _buildContinueLearningCard(
                       context,
                       icon: Icons.design_services,
-                      title: 'UX/UI Foundations',
-                      subtitle:
-                          'Learn to apply aesthetic principles and organic layouts to digital...',
+                      program: ProgramListingScreen.programs[1],
                       progress: 0.30,
                       progressText: '30% Complete',
                     ),
@@ -143,14 +147,14 @@ class HomeScreen extends StatelessWidget {
               ExSectionHeader(
                 title: 'Popular Programs',
                 trailingText: 'See all →',
-                onTrailingPressed: () {},
+                onTrailingPressed: () {
+                  Navigator.pushNamed(context, AppRoutes.programs);
+                },
               ),
               const SizedBox(height: 16),
               _buildPopularProgramCard(
                 context,
-                title: 'Strategic Leadership in Tech',
-                subtitle:
-                    'Develop core competencies for managing cross-functional...',
+                program: ProgramListingScreen.programs[2],
                 rating: '4.9',
                 learners: '12k',
                 placeholderColor: Colors.orange.shade200,
@@ -158,9 +162,7 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(height: 16),
               _buildPopularProgramCard(
                 context,
-                title: 'Full-Stack Javascript...',
-                subtitle:
-                    'From Node.js backend architecture to responsive React frontends.',
+                program: ProgramListingScreen.programs[3],
                 rating: '4.8',
                 learners: '8.5k',
                 placeholderColor: Colors.blue.shade200,
@@ -168,9 +170,7 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(height: 16),
               _buildPopularProgramCard(
                 context,
-                title: 'Motion Design Physics',
-                subtitle:
-                    'Applying natural spring mechanics to digital interface animations.',
+                program: ProgramListingScreen.programs[4],
                 rating: '4.9',
                 learners: '4.2k',
                 placeholderColor: Colors.pink.shade100,
@@ -185,16 +185,19 @@ class HomeScreen extends StatelessWidget {
   Widget _buildContinueLearningCard(
     BuildContext context, {
     required IconData icon,
-    required String title,
-    required String subtitle,
+    required Program program,
     required double progress,
     required String progressText,
   }) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
-    return Container(
-      width: 280,
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, AppRoutes.details, arguments: program);
+      },
+      child: Container(
+        width: 280,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: colorScheme.surfaceContainer,
@@ -229,7 +232,7 @@ class HomeScreen extends StatelessWidget {
           ),
           const Spacer(),
           Text(
-            title,
+            program.title,
             style: textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.bold,
               color: colorScheme.onSurface,
@@ -239,7 +242,7 @@ class HomeScreen extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            subtitle,
+            program.description,
             style: textTheme.bodySmall?.copyWith(
               color: colorScheme.onSurfaceVariant,
             ),
@@ -256,13 +259,13 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
+    ),
     );
   }
 
   Widget _buildPopularProgramCard(
     BuildContext context, {
-    required String title,
-    required String subtitle,
+    required Program program,
     required String rating,
     required String learners,
     required Color placeholderColor,
@@ -270,8 +273,12 @@ class HomeScreen extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
-    return Container(
-      padding: const EdgeInsets.all(12),
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, AppRoutes.details, arguments: program);
+      },
+      child: Container(
+        padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: colorScheme.surfaceContainerLow,
         borderRadius: BorderRadius.circular(16),
@@ -293,7 +300,7 @@ class HomeScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  title,
+                  program.title,
                   style: textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                     color: colorScheme.onSurface,
@@ -301,7 +308,7 @@ class HomeScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  subtitle,
+                  program.description,
                   style: textTheme.bodySmall?.copyWith(
                     color: colorScheme.onSurfaceVariant,
                   ),
@@ -327,6 +334,7 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
+    ),
     );
   }
 }
